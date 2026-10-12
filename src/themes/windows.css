@@ -1,0 +1,55 @@
+/* Windows 11: centered icons, start button beside them, two-line clock on the right */
+:root {
+  --accent: #005fb8;
+  --bar-bg: rgba(243, 243, 243, 0.94);
+  --bar-fg: #1b1b1b;
+  --bar-hover: rgba(0, 0, 0, 0.05);
+  --bar-border: rgba(0, 0, 0, 0.08);
+  --start-label: "⊞";
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #60cdff;
+    --accent-fg: #000;
+    --bar-bg: rgba(32, 32, 32, 0.94);
+    --bar-fg: #ffffff;
+    --bar-hover: rgba(255, 255, 255, 0.06);
+    --bar-border: rgba(255, 255, 255, 0.08);
+  }
+}
+
+#bar { justify-content: center; border-top: 1px solid var(--bar-border); }
+#start, #apps button { width: 44px; height: 40px; border-radius: 4px; }
+#start { font-size: 22px; color: var(--accent); }
+#apps { flex: 0 1 auto; }
+#apps button { flex: none; justify-content: center; padding: 0; }
+#apps img { width: 24px; height: 24px; }
+#apps span { display: none; }
+#apps button::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  translate: -50% 0;
+  width: 6px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--bar-fg);
+  opacity: 0.45;
+  transition: width 0.15s;
+}
+#apps button[aria-pressed="true"] { background: var(--bar-hover); }
+#apps button[aria-pressed="true"]::after { width: 16px; background: var(--accent); opacity: 1; }
+#right { position: absolute; right: 8px; gap: 2px; }
+#right .pill { height: 40px; border-radius: 4px; padding: 0 6px; }
+#right .trayicon { padding: 0 3px; }
+#clock {
+  height: 40px;
+  justify-content: center;
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}

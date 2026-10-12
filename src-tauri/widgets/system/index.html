@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; color: #fff;
+    font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
+  .card { box-sizing: border-box; height: 100%; padding: 16px 18px; border-radius: 22px;
+    display: flex; align-items: center; justify-content: space-around;
+    background: linear-gradient(135deg, rgba(34, 36, 52, 0.8), rgba(16, 16, 22, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.09); }
+  .gauge { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .ring { --p: 0; --c: #60cdff; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+    background: conic-gradient(var(--c) calc(var(--p) * 1%), rgba(255, 255, 255, 0.1) 0); transition: --p 0.4s; }
+  .ring::before { content: attr(data-v); width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    background: #17171f; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .label { font-size: 12px; opacity: 0.7; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="gauge"><div class="ring" id="cpu" data-v="–"></div><span class="label">CPU</span></div>
+    <div class="gauge"><div class="ring" id="mem" data-v="–" style="--c:#b48cff"></div><span class="label" id="mem-label">Memory</span></div>
+    <div class="gauge" id="bat-g" hidden><div class="ring" id="bat" data-v="–" style="--c:#6ee7a8"></div><span class="label">Battery</span></div>
+  </div>
+  <script src="/_api.js"></script>
+  <script>
+    const set = (el, fraction) => {
+      const p = Math.round(fraction * 100);
+      el.style.setProperty('--p', p);
+      el.dataset.v = p + '%';
+    };
+    async function update() {
+      const [s, sys] = await Promise.all([FixUI.stats(), FixUI.system()]);
+      set(cpu, s.cpu);
+      set(mem, s.memory);
+      document.getElementById('mem-label').textContent = `${(s.memory_used / 2 ** 30).toFixed(1)} / ${Math.round(s.memory_total / 2 ** 30)} GB`;
+      document.getElementById('bat-g').hidden = !sys.battery;
+      if (sys.battery) set(bat, sys.battery.percent / 100);
+    }
+    update();
+    setInterval(update, 2000);
+  </script>
+</body>
+</html>

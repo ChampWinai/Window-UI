@@ -1,0 +1,15 @@
+{
+  "identifier": "default",
+  "windows": [
+    "launcher",
+    "flyout",
+    "taskbar-*",
+    "settings",
+    "widget-*"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-hide",
+    "core:menu:default"
+  ]
+}

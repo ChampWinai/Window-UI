@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Taskbar</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" id="theme">
+</head>
+<body class="taskbar">
+  <div id="bar">
+    <button id="start" title="Launcher (Alt+Space)" aria-label="Open launcher"></button>
+    <div id="wm">
+      <div id="workspaces" aria-label="Virtual desktops"></div>
+      <button id="layout" class="pill" aria-label="Tiling layout"></button>
+    </div>
+    <div id="title"></div>
+    <nav id="apps" aria-label="Apps"></nav>
+    <div id="right">
+      <div id="apptray">
+        <button id="chevron" class="pill" aria-label="Show app icons" aria-expanded="true"></button>
+        <div id="appicons"></div>
+      </div>
+      <div id="tray">
+        <button id="lang" class="pill" title="Input language (click to switch)"></button>
+        <button id="bt" class="pill" hidden></button>
+        <button id="net" class="pill"></button>
+        <button id="vol" class="pill"></button>
+        <button id="bat" class="pill" hidden></button>
+      </div>
+      <button id="bell" class="pill" aria-label="Notifications"></button>
+      <button id="settings" class="pill" aria-label="Fix UI settings" title="Fix UI settings"></button>
+      <button id="clock" aria-label="Calendar and notifications"><span class="time"></span><span class="date"></span></button>
+    </div>
+  </div>
+  <script src="icons.js"></script>
+  <script src="taskbar.js"></script>
+</body>
+</html>

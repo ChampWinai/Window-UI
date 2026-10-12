@@ -1,0 +1,205 @@
+/* Base tokens + structure. Looks live in themes/*.css, loaded after this file. */
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --border: #d0d7de;
+  --hover: rgba(0, 0, 0, 0.06);
+  --accent: #3b82f6;
+  --accent-fg: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #1e1f22; --fg: #e6e6e6; --border: #3a3b3f; --hover: rgba(255, 255, 255, 0.08); }
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px "Segoe UI", system-ui, sans-serif;
+}
+button { font: inherit; color: inherit; background: none; border: 0; border-radius: 6px; padding: 0; }
+button:focus-visible { outline: 2px solid var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* launcher */
+body.launcher { display: flex; flex-direction: column; border: 1px solid var(--border); }
+#q {
+  font: inherit;
+  font-size: 18px;
+  padding: 14px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+#list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; flex: 1; }
+#list li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#list li[aria-selected="true"] { background: var(--accent); color: var(--accent-fg); }
+
+/* taskbar: the window is transparent, #bar is the visible surface */
+html:has(> body.taskbar), body.taskbar { background: transparent; }
+body.taskbar { color: var(--bar-fg, var(--fg)); }
+#bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  padding: 0 6px;
+  background: var(--bar-bg, var(--bg));
+}
+#bar button:hover { background: var(--bar-hover, var(--hover)); }
+#start { flex: none; height: 32px; min-width: 34px; font-size: 18px; }
+#start::before { content: var(--start-label, "⊞"); }
+#apps { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; height: 100%; }
+#apps button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  height: 32px;
+  padding: 0 8px;
+  flex: 0 1 200px;
+}
+#apps img { width: 20px; height: 20px; flex: none; }
+#apps img:not([src]) { visibility: hidden; }
+#apps span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#clock { flex: none; display: flex; gap: 6px; padding: 0 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* tray: status pills grouped in a capsule */
+#right { flex: none; display: flex; align-items: center; gap: 6px; }
+#tray {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--tray-bg, transparent);
+  border: 1px solid var(--tray-border, transparent);
+}
+#tray .pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  min-width: 30px;
+  padding: 0 8px;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.15s;
+}
+#tray .pill[hidden], #apptray[hidden] { display: none; }
+#right svg { width: 16px; height: 16px; flex: none; }
+#tray .low { color: #e5484d; }
+#tray .off { opacity: 0.45; }
+#lang { font-size: 12px; font-weight: 600; }
+
+/* other apps' icons, collapsible behind the chevron */
+#right .pill { display: flex; align-items: center; justify-content: center; gap: 4px; height: 28px; min-width: 28px; padding: 0 6px; border-radius: 999px; }
+#apptray { display: flex; align-items: center; }
+#appicons { display: flex; align-items: center; max-width: 480px; overflow: hidden; transition: max-width 0.2s ease; }
+#apptray.collapsed #appicons { max-width: 0; }
+#chevron svg { transition: rotate 0.2s; }
+#apptray:not(.collapsed) #chevron svg { rotate: 180deg; }
+.trayicon { padding: 0 4px; }
+.trayicon img { width: 18px; height: 18px; }
+.trayicon img:not([src]) { visibility: hidden; }
+
+/* notifications bell + unread badge */
+#bell { position: relative; }
+#bell .badge {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+}
+#clock:hover { background: var(--bar-hover, var(--hover)); }
+
+/* virtual desktops + tiling layout */
+#wm { display: flex; align-items: center; gap: 2px; flex: none; }
+#workspaces { display: flex; align-items: center; gap: 2px; }
+.ws { min-width: 24px; height: 24px; padding: 0 6px; border-radius: 6px; font-size: 12px; font-variant-numeric: tabular-nums; opacity: 0.7; }
+.ws[aria-current] { background: var(--accent); color: var(--accent-fg); opacity: 1; font-weight: 600; }
+#bar .ws[aria-current]:hover { background: var(--accent); }
+.ws.add { opacity: 0.5; }
+#layout { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; }
+#layout svg { width: 16px; height: 16px; }
+#layout.off { opacity: 0.4; }
+#title { display: none; }
+/* app groups: pinned-but-closed apps get no running indicator */
+#apps button:not(.running)::after { display: none; }
+
+/* ---- role: toolbar (top strip of the "Toolbar + Dock" layout) ---- */
+body[data-role="toolbar"] #bar {
+  width: auto; height: 100%; margin: 0; padding: 0 6px; gap: 6px;
+  justify-content: flex-start; border: 0; border-radius: 0; box-shadow: none;
+  border-bottom: 1px solid var(--bar-border, transparent);
+}
+body[data-role="toolbar"] #apps { display: none; }
+body[data-role="toolbar"] #wm { display: flex; }
+body[data-role="toolbar"] #start { width: 30px; min-width: 30px; height: 26px; font-size: 15px; transform: none; }
+body[data-role="toolbar"] #title {
+  display: block; flex: 1; min-width: 0; padding: 0 12px; text-align: center;
+  font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+body[data-role="toolbar"] #right { position: static; height: auto; margin: 0; padding: 0; border: 0; gap: 2px; }
+body[data-role="toolbar"] #right .pill { height: 26px; border-radius: 6px; }
+body[data-role="toolbar"] #clock {
+  position: static; translate: none; flex-direction: row; gap: 6px;
+  height: 26px; padding: 0 8px; font-size: 12px; line-height: 1; align-items: center; border-radius: 6px;
+}
+body[data-role="toolbar"] #bar button:hover { transform: none; }
+
+/* ---- role: dock (bottom of the "Toolbar + Dock" layout): floating, icons only ---- */
+body[data-role="dock"] #wm, body[data-role="dock"] #right, body[data-role="dock"] #title { display: none; }
+body[data-role="dock"] #bar {
+  width: fit-content; max-width: calc(100% - 16px); height: 58px; margin: 4px auto 0; padding: 0 7px; gap: 4px;
+  justify-content: center; border-radius: 18px; border: 1px solid var(--bar-border, var(--border));
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+body[data-role="dock"] #apps { flex: 0 1 auto; gap: 4px; overflow: visible; }
+body[data-role="dock"] #start,
+body[data-role="dock"] #apps button {
+  position: relative; display: grid; place-items: center; flex: none;
+  width: 46px; min-width: 46px; max-width: none; height: 46px; padding: 0; border: 0; border-radius: 12px;
+  transform-origin: bottom center; transition: transform 0.15s ease-out;
+}
+body[data-role="dock"] #bar button:hover { transform: scale(1.12) translateY(-2px); background: var(--bar-hover, var(--hover)); }
+body[data-role="dock"] #start { font-size: 28px; color: var(--accent); }
+body[data-role="dock"] #apps img { width: 38px; height: 38px; }
+body[data-role="dock"] #apps span { display: none; }
+/* running dot; wider for more windows, accent when in front */
+body[data-role="dock"] #apps button.running::after {
+  content: ""; display: block; position: absolute; bottom: -4px; left: 50%; translate: -50% 0;
+  width: 4px; height: 4px; border-radius: 2px; background: var(--bar-fg, var(--fg)); opacity: 0.45; transition: width 0.15s;
+}
+body[data-role="dock"] #apps button[data-count="2"]::after { width: 10px; }
+body[data-role="dock"] #apps button[data-count="3"]::after { width: 16px; }
+body[data-role="dock"] #apps button[aria-pressed="true"]::after { background: var(--accent); opacity: 1; }
+
+/* desktop widget host: fully transparent, the widget draws its own card */
+html:has(> body.widget-host), body.widget-host { background: transparent; }
+.widget-host iframe { display: block; width: 100%; height: 100%; border: 0; background: transparent; color-scheme: normal; }

@@ -1,0 +1,47 @@
+/* KDE Plasma (Breeze): bottom panel, icon + title task buttons, blue focus line */
+:root {
+  --accent: #3daee9;
+  --bar-bg: rgba(239, 240, 241, 0.96);
+  --bar-fg: #232629;
+  --bar-hover: rgba(61, 174, 233, 0.15);
+  --bar-border: rgba(0, 0, 0, 0.1);
+  --start-label: "❖";
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bar-bg: rgba(32, 35, 38, 0.96);
+    --bar-fg: #fcfcfc;
+    --bar-border: rgba(255, 255, 255, 0.08);
+  }
+}
+
+body { font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif; }
+#list li { border-radius: 3px; }
+
+#bar { gap: 2px; padding: 0 4px; border-top: 1px solid var(--bar-border); }
+#start { width: 40px; height: 40px; font-size: 22px; color: var(--accent); border-radius: 3px; }
+#apps button {
+  height: 40px;
+  flex: 0 1 220px;
+  max-width: 220px;
+  justify-content: flex-start;
+  border-radius: 3px;
+}
+#apps img { width: 22px; height: 22px; }
+#apps button::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--bar-fg);
+  opacity: 0.15;
+}
+#apps button[aria-pressed="true"] { background: var(--bar-hover); }
+#apps button[aria-pressed="true"]::after { background: var(--accent); opacity: 1; }
+#right .pill { height: 40px; border-radius: 3px; padding: 0 6px; }
+#right svg, .trayicon img { width: 18px; height: 18px; }
+#clock { flex-direction: column; align-items: center; gap: 0; line-height: 1.25; }
+#clock .date { font-size: 11px; opacity: 0.8; }

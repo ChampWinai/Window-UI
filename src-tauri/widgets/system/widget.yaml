@@ -1,0 +1,7 @@
+name: System monitor
+description: CPU, memory and battery at a glance
+width: 300
+height: 140
+corner: top-right
+x: 24
+y: 170

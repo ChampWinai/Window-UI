@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quick settings</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="flyout.css">
+  <link rel="stylesheet" id="theme">
+</head>
+<body class="flyout" data-page="quick">
+  <main data-page="quick">
+    <div class="tiles">
+      <div class="tile" id="tile-wifi" hidden>
+        <button class="tile-main" aria-pressed="false"><span class="tile-icon"></span><span><strong>Wi-Fi</strong><small></small></span></button>
+        <button class="tile-more" aria-label="Wi-Fi networks"></button>
+      </div>
+      <div class="tile" id="tile-bt" hidden>
+        <button class="tile-main" aria-pressed="false"><span class="tile-icon"></span><span><strong>Bluetooth</strong><small></small></span></button>
+        <button class="tile-more" aria-label="Bluetooth devices"></button>
+      </div>
+    </div>
+    <section>
+      <h2>Volume</h2>
+      <div class="slider-row">
+        <button id="out-mute" class="icon-btn" aria-label="Mute speakers"></button>
+        <input id="out" type="range" min="0" max="100" aria-label="Speaker volume">
+        <output id="out-val"></output>
+      </div>
+      <div class="slider-row">
+        <button id="in-mute" class="icon-btn" aria-label="Mute microphone"></button>
+        <input id="in" type="range" min="0" max="100" aria-label="Microphone volume">
+        <output id="in-val"></output>
+      </div>
+    </section>
+    <section>
+      <h2>Output</h2>
+      <div id="outputs" role="radiogroup" aria-label="Output device"></div>
+    </section>
+    <section>
+      <h2>Input</h2>
+      <div id="inputs" role="radiogroup" aria-label="Input device"></div>
+    </section>
+    <section id="bt-section" hidden>
+      <h2>Bluetooth devices</h2>
+      <ul id="bt-devices" class="plain-list"></ul>
+    </section>
+    <section id="media-section" hidden>
+      <h2>Now playing</h2>
+      <div id="media"></div>
+    </section>
+    <footer>
+      <button data-uri="ms-settings:sound">Sound settings</button>
+      <button data-uri="ms-settings:bluetooth">Bluetooth &amp; devices</button>
+      <button id="open-settings">Fix UI settings</button>
+    </footer>
+  </main>
+
+  <main data-page="notifications">
+    <header class="page-head">
+      <h2>Notifications</h2>
+      <button id="clear-all" hidden>Clear all</button>
+    </header>
+    <div id="notifs"></div>
+    <section class="calendar">
+      <header>
+        <strong id="cal-title"></strong>
+        <button id="cal-prev" class="icon-btn" aria-label="Previous month"></button>
+        <button id="cal-next" class="icon-btn" aria-label="Next month"></button>
+      </header>
+      <div id="cal-grid"></div>
+    </section>
+  </main>
+
+  <script src="icons.js"></script>
+  <script src="flyout.js"></script>
+</body>
+</html>

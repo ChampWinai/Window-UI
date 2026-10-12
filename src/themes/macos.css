@@ -1,0 +1,66 @@
+/* macOS: floating dock, icons only, magnify on hover, running dots */
+:root {
+  --accent: #007aff;
+  --bar-bg: rgba(246, 246, 246, 0.82);
+  --bar-fg: #1d1d1f;
+  --bar-border: rgba(0, 0, 0, 0.12);
+  --start-label: "▦";
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #0a84ff;
+    --bar-bg: rgba(40, 40, 42, 0.82);
+    --bar-fg: #f5f5f7;
+    --bar-border: rgba(255, 255, 255, 0.14);
+  }
+}
+
+body { font-family: -apple-system, "SF Pro Text", "Segoe UI", sans-serif; }
+#list li { border-radius: 8px; }
+
+#bar {
+  width: fit-content;
+  max-width: calc(100% - 16px);
+  height: 64px;
+  margin: 4px auto 0;
+  padding: 0 6px;
+  gap: 4px;
+  border: 1px solid var(--bar-border);
+  border-radius: 18px;
+}
+#start, #apps button {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  transform-origin: bottom center;
+  transition: transform 0.15s ease-out;
+}
+#bar button:hover { background: none; transform: scale(1.15); }
+#start { font-size: 34px; color: var(--accent); }
+#apps { flex: 0 1 auto; overflow: visible; }
+#apps img { width: 46px; height: 46px; }
+#apps span, #clock { display: none; }
+/* status items sit after a divider, like the Downloads/Trash side of the dock */
+#right { height: 44px; margin-left: 4px; padding-left: 8px; gap: 2px; border-left: 1px solid var(--bar-border); }
+#right .pill { width: auto; height: 32px; padding: 0 6px; border-radius: 8px; transform: none; }
+#bar #right .pill:hover { transform: none; background: rgba(127, 127, 127, 0.18); }
+#right svg, .trayicon img { width: 18px; height: 18px; }
+#apps button::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  translate: -50% 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--bar-fg);
+  opacity: 0.35;
+}
+#apps button[aria-pressed="true"]::after { opacity: 0.9; }
+
+/* the dock itself has no desktop switcher; the toolbar layout shows one */
+body[data-role="bar"] #wm { display: none; }

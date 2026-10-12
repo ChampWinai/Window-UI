@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fix UI Settings</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" id="theme">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body class="settings">
+  <nav class="side" aria-label="Settings sections">
+    <div class="brand"><span class="logo"></span>Fix UI</div>
+    <a href="#appearance">Appearance</a>
+    <a href="#tiling">Tiling</a>
+    <a href="#wallpaper">Wallpaper</a>
+    <a href="#pins">Pinned apps</a>
+    <a href="#widgets">Widgets</a>
+    <a href="#shortcuts">Shortcuts</a>
+    <a href="#updates">Updates</a>
+    <a href="#general">General</a>
+  </nav>
+
+  <main>
+    <section id="appearance">
+      <h1>Appearance</h1>
+      <h2>Theme</h2>
+      <div class="cards" id="themes" role="radiogroup" aria-label="Theme"></div>
+      <h2>Bars</h2>
+      <div class="cards" id="bars" role="radiogroup" aria-label="Bar layout"></div>
+    </section>
+
+    <section id="tiling">
+      <h1>Tiling</h1>
+      <label class="row">
+        <span><strong>Auto-tile windows</strong><small>Arrange windows automatically when they open or close. Maximize a window to float it.</small></span>
+        <input type="checkbox" role="switch" id="auto_tile">
+      </label>
+      <h2>Layout</h2>
+      <div class="cards small" id="layouts" role="radiogroup" aria-label="Tiling layout"></div>
+      <label class="row">
+        <span><strong>Gap</strong><small>Space around and between tiled windows.</small></span>
+        <span class="range"><input type="range" id="gap" min="0" max="32"><output id="gap-val"></output></span>
+      </label>
+    </section>
+
+    <section id="wallpaper">
+      <h1>Wallpaper</h1>
+      <div class="row">
+        <span><strong>Current</strong><small id="wp-current"></small></span>
+        <span class="buttons">
+          <button id="wp-image">Choose image…</button>
+          <button id="wp-folder">Choose folder…</button>
+        </span>
+      </div>
+      <label class="row">
+        <span><strong>Slideshow</strong><small>With a folder, each monitor gets its own random picture.</small></span>
+        <select id="wallpaper_interval">
+          <option value="0">Off</option>
+          <option value="5">Every 5 minutes</option>
+          <option value="15">Every 15 minutes</option>
+          <option value="30">Every 30 minutes</option>
+          <option value="60">Every hour</option>
+          <option value="180">Every 3 hours</option>
+          <option value="1440">Every day</option>
+        </select>
+      </label>
+      <div class="row">
+        <span><strong>Next picture</strong><small>Pick new pictures from the folder now.</small></span>
+        <button id="wp-next">Next</button>
+      </div>
+    </section>
+
+    <section id="pins">
+      <h1>Pinned apps</h1>
+      <p class="hint">Right-click an app on the taskbar or dock to pin it. Reorder or remove pins here.</p>
+      <ul id="pinned" class="list"></ul>
+    </section>
+
+    <section id="widgets">
+      <h1>Widgets</h1>
+      <p class="hint">Widgets sit on the desktop behind your windows. Each one is a folder with <code>widget.yaml</code> and <code>index.html</code>; copy a built-in one to start your own. Widgets run sandboxed and can only read what the <code>/_api.js</code> API offers.</p>
+      <ul id="widget-list" class="list"></ul>
+      <div class="buttons spaced">
+        <button id="open-widgets">Open widgets folder</button>
+        <button id="reload-widgets">Reload widgets</button>
+      </div>
+    </section>
+
+    <section id="shortcuts">
+      <h1>Shortcuts</h1>
+      <p class="hint">Click a shortcut, then press the new key combination. Esc cancels.</p>
+      <div class="row"><span><strong>Open launcher</strong></span><input class="keys" data-field="launcher_hotkey" readonly></div>
+      <div class="row"><span><strong>Re-tile windows</strong></span><input class="keys" data-field="tile_hotkey" readonly></div>
+      <div class="row"><span><strong>Next tiling layout</strong></span><input class="keys" data-field="layout_hotkey" readonly></div>
+    </section>
+
+    <section id="updates">
+      <h1>Updates</h1>
+      <label class="row">
+        <span><strong>Update URL</strong><small>Where <code>latest.json</code> from <code>npm run release</code> is published. Must be https.</small></span>
+        <input id="update_url" class="text" type="url" placeholder="https://…/latest.json" spellcheck="false">
+      </label>
+      <label class="row">
+        <span><strong>Check at startup</strong><small>Asks before installing anything. Updates are signature-checked.</small></span>
+        <input type="checkbox" role="switch" id="auto_update">
+      </label>
+      <div class="row">
+        <span><strong id="update-status">Check for a newer version</strong><small id="update-notes"></small></span>
+        <span class="buttons">
+          <button id="check-update">Check now</button>
+          <button id="install-update" class="primary" hidden>Install and restart</button>
+        </span>
+      </div>
+    </section>
+
+    <section id="general">
+      <h1>General</h1>
+      <label class="row">
+        <span><strong>Hide the Windows taskbar</strong><small>Takes effect the next time Fix UI starts.</small></span>
+        <input type="checkbox" role="switch" id="hide_windows_taskbar">
+      </label>
+      <div class="row">
+        <span><strong>Config file</strong><small id="config-path"></small></span>
+        <button id="open-config">Open folder</button>
+      </div>
+      <div class="row"><span><strong>Version</strong></span><span id="version"></span></div>
+    </section>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="icons.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

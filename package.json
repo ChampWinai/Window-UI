@@ -1,0 +1,12 @@
+{
+  "name": "fix-ui",
+  "private": true,
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; color: #fff;
+    font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; }
+  .card { box-sizing: border-box; height: 100%; padding: 18px 24px; border-radius: 22px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(135deg, rgba(34, 36, 52, 0.8), rgba(16, 16, 22, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.09); }
+  #time { font-size: 58px; font-weight: 300; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+  #date { margin-top: 8px; font-size: 15px; opacity: 0.75; }
+</style>
+</head>
+<body>
+  <div class="card"><div id="time"></div><div id="date"></div></div>
+  <script>
+    const tick = () => {
+      const d = new Date();
+      time.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      date.textContent = d.toLocaleDateString([], { weekday: 'long', day: 'numeric', month: 'long' });
+    };
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>

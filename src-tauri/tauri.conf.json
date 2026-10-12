@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Fix UI",
+  "version": "0.1.0",
+  "identifier": "com.fixui.desktop",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "launcher",
+        "title": "Launcher",
+        "width": 640,
+        "height": 420,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "visible": false,
+        "center": true
+      },
+      {
+        "label": "flyout",
+        "url": "flyout.html",
+        "title": "Quick settings",
+        "width": 360,
+        "height": 540,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "visible": false,
+        "windowEffects": {
+          "effects": [
+            "acrylic"
+          ]
+        }
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; frame-src http://widget.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEY3OTFCMzg5NTBDOTBCNTEKUldSUkM4bFFpYk9SOS9JRzdqS3R1VjNYRTE4UEttV3pBS0hQYkRsYU9jdFRyeXZyOVZzYXl1dU8K",
+      "endpoints": [],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}

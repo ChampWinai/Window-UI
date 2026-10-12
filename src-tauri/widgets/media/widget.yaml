@@ -1,0 +1,7 @@
+name: Now playing
+description: Album art and controls for the current track
+width: 340
+height: 120
+corner: bottom-right
+x: 24
+y: 24

@@ -1,0 +1,7 @@
+name: Clock
+description: Large time and date
+width: 300
+height: 130
+corner: top-right
+x: 24
+y: 24

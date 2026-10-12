@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; color: #fff;
+    font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
+  .card { --art: linear-gradient(135deg, #3a3f58, #6b5b7b); position: relative; isolation: isolate; overflow: hidden;
+    box-sizing: border-box; height: 100%; padding: 14px; border-radius: 22px; display: flex; gap: 14px; align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.09); background: rgba(16, 16, 22, 0.8); }
+  .card::before { content: ""; position: absolute; inset: -30px; z-index: -2; background: var(--art) center / cover; filter: blur(26px) saturate(1.5); opacity: 0.85; }
+  .card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(0,0,0,.15), rgba(0,0,0,.5)); }
+  img { width: 90px; height: 90px; flex: none; border-radius: 14px; object-fit: cover; background: rgba(255,255,255,.1); box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+  .info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  strong, span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  strong { font-size: 16px; }
+  span { font-size: 12px; opacity: 0.8; }
+  .controls { display: flex; gap: 12px; margin-top: 10px; }
+  button { width: 32px; height: 32px; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-size: 13px; cursor: pointer; }
+  button:hover { background: rgba(255,255,255,.26); }
+  .play { background: #fff; color: #111; }
+  .play:hover { background: rgba(255,255,255,.85); }
+  .idle { opacity: 0.6; font-size: 14px; margin: auto; }
+</style>
+</head>
+<body>
+  <div class="card" id="card"><div class="idle">Nothing playing</div></div>
+  <script src="/_api.js"></script>
+  <script>
+    let key = '';
+    async function update() {
+      const [m] = await FixUI.media();
+      const k = m ? [m.app, m.title, m.artist, m.playing].join('|') : '';
+      if (k === key) return;
+      key = k;
+      if (!m) return (card.innerHTML = '<div class="idle">Nothing playing</div>');
+      card.innerHTML = `<img alt=""><div class="info"><strong></strong><span></span>
+        <div class="controls"><button data-a="prev" aria-label="Previous">⏮</button><button class="play" data-a="toggle" aria-label="Play or pause">${m.playing ? '⏸' : '▶'}</button><button data-a="next" aria-label="Next">⏭</button></div></div>`;
+      card.querySelector('strong').textContent = m.title || 'Unknown';
+      card.querySelector('span').textContent = m.artist;
+      for (const b of card.querySelectorAll('button')) b.onclick = () => FixUI.mediaControl(m.app, b.dataset.a).then(() => setTimeout(update, 300));
+      const src = await FixUI.mediaThumb(m.app);
+      if (src) {
+        card.querySelector('img').src = src;
+        card.style.setProperty('--art', `url("${src}")`);
+      }
+    }
+    update();
+    setInterval(update, 1500);
+  </script>
+</body>
+</html>
